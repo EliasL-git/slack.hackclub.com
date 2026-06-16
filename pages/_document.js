@@ -1,5 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+const themesrc = `(function(){try{var s=localStorage.getItem('hc-site-theme'),t=s==='dark'||s==='light'?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),r=document.documentElement;if(t==='dark')r.classList.add('dark');r.style.colorScheme=t;}catch(_){}})();`
+
 const org = {
   '@context': 'http://schema.org',
   '@type': 'Organization',
@@ -9,8 +11,8 @@ const org = {
   sameAs: [
     'https://twitter.com/hackclub',
     'https://github.com/hackclub',
-    'https://www.instagram.com/starthackclub',
-    'https://www.youtube.com/c/HackClubHQ'
+    'https://www.youtube.com/c/HackClubHQ',
+    'https://www.instagram.com/starthackclub'
   ],
   contactPoint: [
     {
@@ -37,8 +39,11 @@ class MyDocument extends Document {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }}
           />
+          <link rel="icon" href="/favicon.png" />
+          <link rel="shortcut icon" href="/favicon.png" />
         </Head>
         <body>
+          <script dangerouslySetInnerHTML={{ __html: themesrc }} />
           <Main />
           <NextScript />
         </body>

@@ -1,80 +1,50 @@
-/** @jsxImportSource theme-ui */
+'use client'
+
 import { useState, useEffect } from 'react'
-import { Box, Card, Grid, Heading, Text } from 'theme-ui'
-import { keyframes } from '@emotion/react'
 import { getLiveCount, formatted as defaultFormatted } from '../../lib/members'
 
-const float1 = keyframes`
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-18px); }
-`
-const float2 = keyframes`
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-`
-const float3 = keyframes`
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-`
+function WaveDivider() {
+  return (
+    <div
+      className="wave-container"
+      style={{
+        position: 'absolute',
+        bottom: -2,
+        left: 0,
+        right: 0,
+        lineHeight: 0,
+        zIndex: 20,
+        pointerEvents: 'none',
+      }}
+    >
+      <svg
+        viewBox="0 0 1920 22"
+        preserveAspectRatio="none"
+        style={{ width: '100%', height: 22, display: 'block', marginBottom: -8 }}
+      >
+        <path
+          d="M0,18 C40,18 40,2 80,2 C120,2 120,18 160,18 C200,18 200,2 240,2 C280,2 280,18 320,18 C360,18 360,2 400,2 C440,2 440,18 480,18 C520,18 520,2 560,2 C600,2 600,18 640,18 C680,18 680,2 720,2 C760,2 760,18 800,18 C840,18 840,2 880,2 C920,2 920,18 960,18 C1000,18 1000,2 1040,2 C1080,2 1080,18 1120,18 C1160,18 1160,2 1200,2 C1240,2 1240,18 1280,18 C1320,18 1320,2 1360,2 C1400,2 1400,18 1440,18 C1480,18 1480,2 1520,2 C1560,2 1560,18 1600,18 C1640,18 1640,2 1680,2 C1720,2 1720,18 1760,18 C1800,18 1800,2 1840,2 C1880,2 1880,18 1920,18"
+          fill="none"
+          style={{ stroke: 'var(--background)' }}
+          strokeWidth="2.5"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+      <svg
+        viewBox="0 0 1920 40"
+        preserveAspectRatio="none"
+        style={{ width: '100%', height: 40, display: 'block' }}
+      >
+        <path
+          d="M0,40 L0,27 C40,27 40,8 80,8 C120,8 120,27 160,27 C200,27 200,8 240,8 C280,8 280,27 320,27 C360,27 360,8 400,8 C440,8 440,27 480,27 C520,27 520,8 560,8 C600,8 600,27 640,27 C680,27 680,8 720,8 C760,8 760,27 800,27 C840,27 840,8 880,8 C920,8 920,27 960,27 C1000,27 1000,8 1040,8 C1080,8 1080,27 1120,27 C1160,27 1160,8 1200,8 C1240,8 1240,27 1280,27 C1320,27 1320,8 1360,8 C1400,8 1400,27 1440,27 C1480,27 1480,8 1520,8 C1560,8 1560,27 1600,27 C1640,27 1640,8 1680,8 C1720,8 1720,27 1760,27 C1800,27 1800,8 1840,8 C1880,8 1880,27 1920,27 L1920,40 Z"
+          style={{ fill: 'var(--background)' }}
+        />
+      </svg>
+    </div>
+  )
+}
 
-const HeroGraphic = () => (
-  <Box
-    sx={{
-      position: 'absolute',
-      top: 0, left: 0, right: 0, bottom: 0,
-      overflow: 'hidden',
-      zIndex: 0,
-      pointerEvents: 'none'
-    }}
-  >
-    <Box sx={{
-      position: 'absolute', top: '10%', left: '5%',
-      width: ['60px', '90px'], height: ['60px', '90px'],
-      borderRadius: '50%', bg: 'rgba(255,255,255,0.15)',
-      animation: `${float1} 6s ease-in-out infinite`
-    }} />
-    <Box sx={{
-      position: 'absolute', top: '60%', left: '2%',
-      width: ['30px', '50px'], height: ['30px', '50px'],
-      borderRadius: '50%', bg: 'rgba(255,255,255,0.1)',
-      animation: `${float2} 8s ease-in-out infinite`
-    }} />
-    <Box sx={{
-      position: 'absolute', top: '20%', right: ['80px', '200px'],
-      width: ['40px', '70px'], height: ['40px', '70px'],
-      borderRadius: '50%', bg: 'rgba(255,255,255,0.12)',
-      animation: `${float3} 7s ease-in-out infinite`
-    }} />
-    <Box aria-hidden="true" sx={{
-      position: 'absolute',
-      bottom: '-10px',
-      left: ['10px', '40px'],
-      fontSize: ['80px', '140px'],
-      fontWeight: 800,
-      color: 'rgba(255,255,255,0.08)',
-      lineHeight: 1,
-      fontFamily: 'inherit',
-      userSelect: 'none'
-    }}>
-      #
-    </Box>
-    <Box aria-hidden="true" sx={{
-      position: 'absolute',
-      top: '5px',
-      right: ['80px', '220px'],
-      fontSize: ['60px', '100px'],
-      fontWeight: 800,
-      color: 'rgba(255,255,255,0.06)',
-      lineHeight: 1,
-      fontFamily: 'inherit',
-      userSelect: 'none'
-    }}>
-      #
-    </Box>
-  </Box>
-)
-
-const MemberBadge = () => {
+function MemberBadge() {
   const [count, setCount] = useState(defaultFormatted)
 
   useEffect(() => {
@@ -91,136 +61,203 @@ const MemberBadge = () => {
   }, [])
 
   return (
-    <Box sx={{
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: 2,
-      bg: 'rgba(255,255,255,0.15)',
-      border: '1px solid rgba(255,255,255,0.3)',
-      borderRadius: '999px',
-      px: 3, py: 1, mb: 3,
-      backdropFilter: 'blur(8px)'
-    }}>
-      <Box sx={{
-        width: '8px', height: '8px',
-        borderRadius: '50%', bg: '#2eb67d',
-        boxShadow: '0 0 6px #2eb67d',
-        animation: 'pulse 2s ease-in-out infinite',
-        '@keyframes pulse': {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0.4 }
-        }
-      }} />
-      <Text sx={{ color: 'white', fontSize: 1, fontWeight: 600, letterSpacing: '0.03em' }}>
+    <div
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 8,
+        background: 'rgba(236,55,80,0.08)',
+        border: '1px solid rgba(236,55,80,0.12)',
+        borderRadius: 9999,
+        padding: '4px 16px',
+        marginBottom: 16,
+      }}
+    >
+      <div
+        style={{
+          width: 8,
+          height: 8,
+          borderRadius: '50%',
+          background: '#2eb67d',
+          boxShadow: '0 0 6px #2eb67d',
+        }}
+      />
+      <span
+        style={{
+          color: 'var(--foreground)',
+          fontSize: 14,
+          fontWeight: 600,
+          letterSpacing: '0.03em',
+          fontFamily: "'Phantom Sans', system-ui, sans-serif",
+        }}
+      >
         {count} hackers online
-      </Text>
-    </Box>
+      </span>
+    </div>
   )
 }
 
-const Content = ({ onJoinClick }) => (
-  <Grid
-    gap={3}
-    pt={[5, '100px']}
-    pb={[3, 4]}
-    sx={{
-      backgroundImage:
-        'radial-gradient(ellipse farthest-corner at top left, #ff8c37, #ec3750)',
-      position: 'relative'
-    }}
-  >
-    <HeroGraphic />
-    <Box sx={{ position: 'relative', zIndex: 1, textShadow: 'text', textAlign: ['center', 'center'] }}>
-      <MemberBadge />
-      <Heading
-        as="h1"
-        variant="title"
-        sx={{ color: 'white', fontSize: [5, 6, 7], lineHeight: 'limit', mb: [2, 3] }}
-      >
-        Hack Club Slack
-      </Heading>
-    </Box>
-    <Box sx={{ zIndex: 5, display: 'flex', alignItems: 'center', position: 'relative' }}>
-      <Card
-        sx={{
-          variant: 'cards.translucent',
-          maxWidth: (t) => `calc(${t.sizes.narrow} * 1.2)`,
-          mx: 'auto',
-          textAlign: 'center'
+export default function SlackHeader({ onJoinClick }) {
+  return (
+    <section
+      className="slack-hero"
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'linear-gradient(180deg, rgba(236,55,80,0.04) 60%, rgba(236,55,80,0.40) 100%)',
+      }}
+    >
+      <div
+        className="hero-center"
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          zIndex: 10,
+          paddingTop: 80,
+          paddingBottom: 100,
+          gap: 0,
         }}
       >
-        <Text as="p" sx={{ fontSize: [2, 3], mb: 3 }}>
-          Hack Clubbers hang out on our Slack.
-          <br />
-          Join up to make friends, find projects, and have fun.
-        </Text>
-        <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Text
-            as="button"
-            onClick={onJoinClick}
-            sx={{
-              bg: 'red',
-              backgroundImage:
-                'radial-gradient(ellipse farthest-corner at top left, #ff8c37, #ec3750)',
-              color: 'white',
-              fontSize: [2, 3],
-              px: 5, py: 3,
-              borderRadius: 'extra',
-              fontWeight: 'bold',
-              textDecoration: 'none',
-              display: 'inline-block',
-              position: 'relative',
-              overflow: 'hidden',
-              transition: 'all 0.125s ease-in-out',
-              border: '2px solid white',
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              ':hover': {
-                transform: 'scale(1.05)',
-                boxShadow: '0 0 0 2px white',
-                backgroundImage:
-                  'radial-gradient(ellipse farthest-corner at bottom right, #ff8c37, #ec3750)'
-              }
+        <MemberBadge />
+
+        <h1
+          style={{
+            fontFamily: "'Zarathustra', Georgia, serif",
+            fontSize: 'clamp(52px, 12vw, 90px)',
+            fontWeight: 'normal',
+            lineHeight: 0.92,
+            color: 'var(--foreground)',
+            margin: 0,
+            marginBottom: 16,
+            textAlign: 'center',
+          }}
+        >
+          Where hackers<br />
+          hang out on{' '}
+          <span
+            style={{
+              background:
+                'repeating-linear-gradient(105deg, #ec3750 0%, #ff8c37 16%, #f1c40f 32%, #33d6a6 48%, #338eda 64%, #a633d6 80%, #ec3750 100%)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
             }}
           >
-            Join Hack Club
-          </Text>
-        </Box>
-      </Card>
-    </Box>
-  </Grid>
-)
+            Slack
+          </span>
+        </h1>
 
-const Cover = () => (
-  <Box
-    sx={{
-      position: 'absolute',
-      bottom: '-20%',
-      height: '100%',
-      aspectRatio: '1/1',
-      right: 0,
-      backgroundImage: 'url(slack-logo.svg)',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100%',
-      opacity: 0.75,
-      zIndex: 0,
-      filter: 'saturate(0.9) grayscale(0.2)'
-    }}
-  />
-)
+        <p
+          style={{
+            fontFamily: "'Phantom Sans', system-ui, sans-serif",
+            fontWeight: 'normal',
+            fontSize: 20,
+            color: 'var(--foreground)',
+            margin: 0,
+            marginBottom: 32,
+            lineHeight: 1.2,
+            textAlign: 'center',
+            maxWidth: 'min(600px, calc(100vw - 64px))',
+          }}
+        >
+          Hack Clubbers hang out on our Slack. Join up to make friends, find projects, and have fun.
+        </p>
 
+        <button
+          onClick={onJoinClick}
+          className="hero-join-btn"
+          style={{
+            fontFamily: "'Phantom Sans', system-ui, sans-serif",
+            fontWeight: 600,
+            fontSize: 22,
+            color: 'white',
+            background: '#ec3750',
+            border: 'none',
+            borderRadius: 9999,
+            padding: '14px 40px',
+            cursor: 'pointer',
+            lineHeight: 1,
+            display: 'inline-block',
+          }}
+        >
+          Join Hack Club
+        </button>
 
-const Slack=({onJoinClick})=>(
-  <Box 
-  as="section"
-  id="slack"
-  sx={{
-    position:'relative',
-    overflow:'hidden'
-  }}
-  >
-    <Cover/>
-    <Content onJoinClick={onJoinClick}/>
-  </Box>
-)
-export default Slack
+        <p
+          style={{
+            fontFamily: "'Phantom Sans', system-ui, sans-serif",
+            fontStyle: 'italic',
+            fontWeight: 'normal',
+            fontSize: 16,
+            lineHeight: 1.35,
+            color: 'var(--foreground)',
+            margin: 0,
+            marginTop: 10,
+            padding: '10px 16px',
+            maxWidth: 'min(680px, calc(100vw - 48px))',
+            background: 'var(--nav-bg)',
+            border: '1px solid var(--border)',
+            borderRadius: 9999,
+            boxShadow: '0 10px 28px rgba(23, 23, 29, 0.08)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            pointerEvents: 'auto',
+            textAlign: 'center',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            columnGap: 4,
+          }}
+        >
+          <span style={{ color: 'var(--foreground)' }}>
+            For all teens aged 13–18. By joining, you agree to our
+          </span>
+          <a
+            href="https://hackclub.com/conduct/"
+            style={{
+              color: '#ec3750',
+              textDecoration: 'underline',
+              textUnderlineOffset: 2,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            code of conduct.
+          </a>
+        </p>
+      </div>
+
+      <WaveDivider />
+
+      <style>{`
+        @media (max-width: 1023px) {
+          .hero-center { padding-left: 24px; padding-right: 24px; }
+        }
+        .hero-join-btn {
+          transition: background 0.4s ease, color 0.4s ease;
+        }
+        .hero-join-btn:hover {
+          background: #ff8c37 !important;
+        }
+        @keyframes teens-gradient {
+          0%   { background-position: 0% 50%; }
+          100% { background-position: 200% 50%; }
+        }
+        .slack-hero h1 span {
+          animation: teens-gradient 6s linear infinite;
+        }
+        @media (max-width: 767px) {
+          .wave-container { overflow: hidden !important; }
+          .wave-container svg { width: 300% !important; margin-left: -100% !important; }
+        }
+      `}</style>
+    </section>
+  )
+}
